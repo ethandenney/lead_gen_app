@@ -29,6 +29,7 @@ class LeadsController < ApplicationController
   # POST /leads.json
   def create
     @lead = Lead.new(lead_params)
+    @leads.user = current_user
 
     respond_to do |format|
       if @lead.save
