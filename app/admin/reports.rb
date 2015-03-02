@@ -1,4 +1,5 @@
 ActiveAdmin.register Reports do
+  permit_params 
 
 
   # See permitted parameters documentation:
