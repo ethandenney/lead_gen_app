@@ -1,27 +1,34 @@
-<h1>Listing leads</h1>
-
-<table>
+<%- model_class = Leads -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => Leads %></h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>User</th>
-      <th>Reports</th>
-      <th colspan="3"></th>
+      <th>ID</th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
-
   <tbody>
-    <% @leads.each do |lead| %>
+    <% @leads.each do |leads| %>
       <tr>
-        <td><%= lead.user %></td>
-        <td><%= lead.reports %></td>
-        <td><%= link_to 'Show', lead %></td>
-        <td><%= link_to 'Edit', edit_lead_path(lead) %></td>
-        <td><%= link_to 'Destroy', lead, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= leads.id %></td>
+        <td><%=l leads.created_at, format: :long %></td>
+        <td>
+          <%= link_to leads_path(leads), :class => 'btn btn-xs', :title => "#{ t('.show', :default => t('helpers.links.show')) }" do %>
+            <%= glyph 'info-sign' %>
+            <%= glyph 'pencil' %>
+          <%- end -%>
+          <%= link_to leads_path(leads), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-xs', :title => "#{ t('.destroy', :default => t('helpers.links.destroy')) }" do %>
+            <%= glyph 'remove' %>
+          <%- end -%>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Lead', new_lead_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_leads_path,
+            :class => 'btn btn-primary' %>
